@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .question h2 {
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="score" id="score"></div>
+        <div class="timer" id="timer"></div>
+        <div class="question active" id="question1">
+            <h2>Question 1: Quelle est la capitale du Maroc ?</h2>
+            <ul class="options">
+                <li><input type="radio" name="q1" value="Rabat"> Rabat</li>
+                <li><input type="radio" name="q1" value="Marrakech"> Marrakech</li>
+                <li><input type="radio" name="q1" value="Tanger"> Tanger</li>
+            </ul>
+        </div>
+        <div class="question" id="question2">
+            <h2>Question 2: Quelle est la capitale de l'Allemagne ?</h2>
+            <ul class="options">
+                <li><input type="radio" name="q2" value="Paris"> Paris</li>
+                <li><input type="radio" name="q2" value="Londres"> Londres</li>
+                <li><input type="radio" name="q2" value="Berlin"> Berlin</li>
+            </ul>
+        </div>
+        <button id="nextButton" onclick="showNextQuestion()">Suivant</button>
+        <button id="submitButton" onclick="calculateScore()" style="display: none;">Soumettre</button>
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft = 10; // Temps en secondes pour chaque question
+        let curr = 1;
+        const totalQuestions = 2;
+
+        function startTimer() {
+            clearInterval(timer); // Clear any existing timer
+            timer = setInterval(function() {
+                if (timeLeft <= 0) {
+                    clearInterval(timer); // Arrêter le timer
+                    showNextQuestion(); // Passer à la question suivante
+                } else {
+                    document.getElementById("timer").innerText = "Temps restant: " + timeLeft + "s"; // Afficher le temps restant
+                }
+                timeLeft -= 1; // Décrémenter le temps restant
+            }, 1000);
+        }
+
+        function showNextQuestion() {
+            if (curr < totalQuestions) { // Vérifier s'il reste des questions
+                document.getElementById(`question${curr}`).classList.remove('active');
+                curr += 1;
+                document.getElementById(`question${curr}`).classList.add('active');
+                timeLeft = 10;
+                startTimer();
+            } else {
+                document.getElementById("nextButton").style.display = "none";
+                document.getElementById("submitButton").style.display = "block";
+                clearInterval(timer);
+            }
+        }
+
+        function calculateScore() {
+            clearInterval(timer);
+            let score = 0;
+            const correctAnswers = {
+                q1: "Rabat",
+                q2: "Berlin"
+            };
+
+            for (let question in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                if (selectedOption && selectedOption.value === correctAnswers[question]) {
+                    score += 1;
+                }
+            }
+
+            document.getElementById("score").innerText = "Votre score: " + score+"/"+totalQuestions;
+        }
+
+        window.onload = function() {
+            startTimer();
+        };
+    </script>
+</body>
+</html>
