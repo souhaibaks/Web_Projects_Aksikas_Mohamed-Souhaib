@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Manipulation de vue</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+<div id="monapp">
+    <label>Ecrire: </label>
+	<input type="text" v-model="text" @input="checkspaces">
+    <p>{{msg}}</p>
+</div>
+
+
+<script>
+	const appli = {
+		data () {
+				return {
+					text: "",
+                    msg: ""
+				}
+			},
+            methods : {
+                checkspaces() {
+                    if(this.text.includes(" ")) {
+                        this.msg = "Il y a des espaces";
+                    }
+                    else {
+                        this.msg = "";}
+                    
+                }
+            }
+	};
+	
+Vue.createApp(appli).mount("#monapp");
+</script>
+
+</body>
+</html>
