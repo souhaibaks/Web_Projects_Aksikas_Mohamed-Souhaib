@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Task Manager</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .completed {
+            color: green;
+        }
+        .filter-button {
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Task Manager</h1>
+        <div>
+            <button @click="filterTasks('all')" :class="{ active: filter === 'all' }" class="filter-button">All</button>
+            <button @click="filterTasks('todo')" :class="{ active: filter === 'todo' }" class="filter-button">To Do</button>
+            <button @click="filterTasks('completed')" :class="{ active: filter === 'completed' }" class="filter-button">Completed</button>
+        </div>
+        <ul>
+            <li v-for="task in getFilteredTasks()" :key="task.id" :class="{ completed: task.completed }">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <button v-show="!task.completed" @click="markAsCompleted(task.id)">Mark as Completed</button>
+            </li>
+        </ul>
+        <p>Total Tasks: {{ getTotalTasks() }}</p>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    tasks: [
+                        {
+                            id: 1,
+                            title: "Faire les courses",
+                            description: "Acheter des légumes et du lait.",
+                            completed: false
+                        },
+                        {
+                            id: 2,
+                            title: "Faire du sport",
+                            description: "Courir pendant 30 minutes.",
+                            completed: true
+                        },
+                        {
+                            id: 3,
+                            title: "Réviser pour l'examen",
+                            description: "Relire le chapitre 5 du manuel.",
+                            completed: false
+                        }
+                    ],
+                    filter: 'all'
+                };
+            },
+            methods: {
+                filterTasks(filter) {
+                    this.filter = filter;
+                },
+                markAsCompleted(taskId) {
+                    const task = this.tasks.find(task => task.id === taskId);
+                    if (task) task.completed = true;
+                },
+                getFilteredTasks() {
+                    if (this.filter === 'todo') {
+                        return this.tasks.filter(task => !task.completed);
+                    } else if (this.filter === 'completed') {
+                        return this.tasks.filter(task => task.completed);
+                    } else {
+                        return this.tasks;
+                    }
+                },
+                getTotalTasks() {
+                    return this.tasks.length;
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
