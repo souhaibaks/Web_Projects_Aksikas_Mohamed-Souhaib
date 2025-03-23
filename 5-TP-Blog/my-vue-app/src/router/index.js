@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import PostDetailView from '../views/PostDetailView.vue'
 import CreatePostView from '../views/CreatePostView.vue'
+import PostDetailView from '../views/PostDetailView.vue'
 
 const routes = [
   {
@@ -10,26 +10,25 @@ const routes = [
     component: Home
   },
   {
-    path: '/post/:id',
-    name: 'PostDetail',
-    component: PostDetailView,
-    props: true
-  },
-  {
     path: '/create',
     name: 'CreatePost',
     component: CreatePostView
   },
   {
+    path: '/posts/:id',
+    name: 'PostDetail',
+    component: PostDetailView,
+    props: true
+  },
+  {
     path: '/tags/:tag',
     name: 'TagPosts',
-    component: Home,
-    props: true
+    component: Home
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 

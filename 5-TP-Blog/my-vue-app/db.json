@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Getting Started with Vue 3",
+      "body": "Vue 3 is the latest major version of Vue.js that brings many exciting features including the Composition API, better TypeScript support, and improved performance. In this article, we'll explore the basics of Vue 3 and how to get started with it.",
+      "tags": [
+        "vue",
+        "javascript",
+        "frontend"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Understanding the Vue.js Composition API",
+      "body": "The Composition API is a new feature in Vue 3 that provides a more flexible way to organize component logic. It allows for better code reuse and typescript support compared to the Options API.",
+      "tags": [
+        "vue",
+        "composition-api",
+        "javascript"
+      ]
+    },
+    {
+      "id": "6bcb",
+      "title": "dada",
+      "body": "dada",
+      "tags": [
+        "dada"
+      ]
+    },
+    {
+      "id": "aff7",
+      "title": "dada",
+      "body": "dadad",
+      "tags": [
+        "adda"
+      ]
+    }
+  ]
+}

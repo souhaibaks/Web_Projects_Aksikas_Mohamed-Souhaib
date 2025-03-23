@@ -1,30 +1,49 @@
 <template>
-  <div class="container">
-    <h1 class="mb-4">Blog Posts</h1>
-    <div v-if="loading" class="text-center">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+  <div class="home">
+    <div class="content">
+      <PostList />
     </div>
-    <div v-else-if="error" class="alert alert-danger">
-      {{ error }}
-    </div>
-    <PostList v-else :posts="posts" />
+    <aside class="sidebar">
+      <TagCloud />
+    </aside>
   </div>
 </template>
 
 <script>
-import { usePosts } from '../composables/usePosts'
 import PostList from '../components/PostList.vue'
+import TagCloud from '../components/TagCloud.vue'
 
 export default {
-  name: 'Home',
   components: {
-    PostList
-  },
-  setup() {
-    const { posts, loading, error } = usePosts()
-    return { posts, loading, error }
+    PostList,
+    TagCloud
   }
 }
-</script> 
+</script>
+
+<style scoped>
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+
+.content {
+  min-width: 0;
+}
+
+.sidebar {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+@media (max-width: 768px) {
+  .home {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

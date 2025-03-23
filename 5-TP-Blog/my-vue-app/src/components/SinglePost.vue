@@ -1,21 +1,20 @@
 <template>
-  <div class="card h-100">
-    <div class="card-body d-flex flex-column">
-      <h5 class="card-title">{{ post.title }}</h5>
-      <div class="mb-2">
-        <span v-for="tag in post.tags" :key="tag" class="badge bg-secondary me-1">
-          {{ tag }}
-        </span>
-      </div>
-      <p class="card-text flex-grow-1">{{ snippet }}</p>
-      <router-link :to="'/post/' + post.id" class="btn btn-primary mt-3">Read More</router-link>
+  <div class="post-card">
+    <h3>{{ post.title }}</h3>
+    <div class="snippet">{{ snippet }}</div>
+    <div class="tags">
+      <span v-for="tag in post.tags" :key="tag" class="tag">
+        <router-link :to="{ path: `/tags/${tag}` }">{{ tag }}</router-link>
+      </span>
     </div>
+    <router-link :to="{ path: `/posts/${post.id}` }" class="read-more">
+      Read More
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SinglePost',
   props: {
     post: {
       type: Object,
@@ -31,12 +30,51 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  transition: transform 0.2s;
+.post-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.post-card h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
 }
-</style> 
+
+.snippet {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #e7f1ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.875rem;
+}
+
+.tag a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.read-more {
+  display: inline-block;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+</style>

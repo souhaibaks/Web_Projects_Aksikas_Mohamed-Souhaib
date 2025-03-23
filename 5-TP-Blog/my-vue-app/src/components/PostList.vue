@@ -1,36 +1,42 @@
 <template>
-  <div class="row">
-    <div class="col-md-8">
-      <div v-if="posts.length === 0" class="text-center">
-        <p>No posts found</p>
-      </div>
-      <div v-else class="row">
-        <div v-for="post in posts" :key="post.id" class="col-md-6 mb-4">
-          <PostCard :post="post" />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <Tags :posts="posts" />
+  <div class="post-list">
+    <div v-if="error">{{ error }}</div>
+    <div v-if="posts.length === 0">Loading posts...</div>
+    <div v-else class="posts-grid">
+      <SinglePost
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import PostCard from './PostCard.vue'
-import Tags from './Tags.vue'
+import SinglePost from './SinglePost.vue'
+import getPosts from '../composables/getPosts'
 
 export default {
-  name: 'PostList',
-  components: {
-    PostCard,
-    Tags
-  },
-  props: {
-    posts: {
-      type: Array,
-      required: true
-    }
+  components: { SinglePost },
+  setup() {
+    const { posts, error, load } = getPosts()
+
+    load()
+
+    return { posts, error }
   }
 }
-</script> 
+</script>
+
+<style scoped>
+.post-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.posts-grid {
+  display: grid;
+  gap: 2rem;
+}
+</style>

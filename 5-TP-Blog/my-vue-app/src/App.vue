@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div class="app">
     <NavBar />
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -17,24 +17,23 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav {
-  padding: 30px;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 </style>
