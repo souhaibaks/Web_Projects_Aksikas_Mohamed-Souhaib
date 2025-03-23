@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "First Blog Post",
+      "body": "This is my first blog post using JSON Server",
+      "tags": ["vue", "javascript", "web"]
+    },
+    {
+      "id": 2,
+      "title": "Second Blog Post",
+      "body": "Learning how to use JSON Server with Vue.js",
+      "tags": ["vue", "api", "tutorial"]
+    }
+  ]
+} 
