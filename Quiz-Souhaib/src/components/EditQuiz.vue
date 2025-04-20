@@ -9,7 +9,7 @@
                 </div>
                 <div class="form-group">
                     <label for="topic">Topic</label>
-                    <input type="text" v-model="topic" class="form-input" placeholder="Enter quiz topic">
+                    <input type="text" v-model="topic" class="form-input" placeholder="Enter quiz topic" readonly>
                 </div>
                 <div class="form-group">
                     <label for="difficulty">Difficulty</label>
@@ -28,6 +28,16 @@
                         </label>
                     </div>
                 </div>
+
+                <!-- Open Trivia DB Integration -->
+                <div class="trivia-section">
+                    <h3>Generate New Questions from Open Trivia DB</h3>
+                    <OpenTriviaDB 
+                        @questions-generated="handleQuestionsGenerated" 
+                        @difficulty-selected="handleDifficultySelected"
+                    />
+                </div>
+
                 <div v-for="(question, index) in questions" :key="index" class="question-group">
                     <h3 class="question-number">Question {{ index + 1 }}</h3>
                     <input type="text" v-model="question.question" class="form-input" placeholder="Enter a question">
@@ -64,8 +74,12 @@ import {ref, onMounted} from 'vue'
 import {db} from '../firebase'
 import {doc, getDoc, updateDoc} from 'firebase/firestore'
 import {useRoute, useRouter} from 'vue-router'
+import OpenTriviaDB from './OpenTriviaDB.vue'
 
 export default {
+    components: {
+        OpenTriviaDB
+    },
     setup() {
         const questions = ref([])
         const title = ref("")
@@ -98,6 +112,14 @@ export default {
             questions.value.splice(index, 1)
         }
 
+        const handleQuestionsGenerated = (generatedQuestions) => {
+            questions.value = generatedQuestions
+        }
+
+        const handleDifficultySelected = (selectedDifficulty) => {
+            difficulty.value = selectedDifficulty
+        }
+
         const updateQuiz = async () => {
             try {
                 await updateDoc(doc(db, 'Quizzes', quizId), {
@@ -121,6 +143,8 @@ export default {
             difficulty,
             addQuestion,
             removeQuestion,
+            handleQuestionsGenerated,
+            handleDifficultySelected,
             updateQuiz
         }
     }
@@ -269,5 +293,17 @@ export default {
     .button-group {
         flex-direction: column;
     }
+}
+
+.trivia-section {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+.trivia-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
 }
 </style> 
